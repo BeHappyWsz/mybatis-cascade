@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8" ?>  
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">  
+<mapper namespace="wsz.mybatis.cascade.dao.UserMapper">
+	
+	<sql id="baseColumn">
+		id,username,password
+	</sql>
+	
+	<resultMap id="baseMap" type="wsz.mybatis.cascade.entity.User">
+		<id column="id" property="id"/>
+		<result column="username" property="username"/>
+		<result column="password" property="password"/>
+		<collection property="books" javaType="List" column="id" ofType="wsz.mybatis.cascade.entity.Book" select="selectBook"></collection>
+	</resultMap>
+	
+	<!-- 查找book -->
+	<select id="selectBook" resultType="wsz.mybatis.cascade.entity.Book">
+		select *
+		from t_book
+		where book_id =#{id}
+	</select>
+	
+	<select id="findAll" resultMap="baseMap">
+		select u.id,u.username,u.password,b.book_id as book_id,b.name,b.price,b.code
+		from t_user u left join t_book b on u.id = b.user_id
+	</select>
+	
+	<select id="findById" resultType="wsz.mybatis.cascade.entity.User" parameterType="int">
+		select <include refid="baseColumn"/>
+		from t_user
+		where id=#{id}
+	</select>
+</mapper>
