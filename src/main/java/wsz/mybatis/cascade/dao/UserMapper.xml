@@ -6,23 +6,58 @@
 		id,username,password
 	</sql>
 	
+	<!-- 注意 association/collection的上下顺序,否则异常-->
 	<resultMap id="baseMap" type="wsz.mybatis.cascade.entity.User">
 		<id column="id" property="id"/>
 		<result column="username" property="username"/>
 		<result column="password" property="password"/>
-		<collection property="books" javaType="List" column="book_id" ofType="wsz.mybatis.cascade.entity.Book" select="selectBook"></collection>
+		
+		<!-- manyToOne引用resultMap-->
+		<association property="address" resultMap="addressResultMap"/>
+		
+		<!-- oneToMany传入user的id查找集合数据(可以利用中间表) -->
+		<collection property="books" javaType="List" column="id" ofType="wsz.mybatis.cascade.entity.Book" select="otmSelect" />
+		
+		<!-- manyToMany传入user的id通过中间表查找role对象 -->
+		<collection property="roles" javaType="List" column="id" ofType="wsz.mybatis.cascade.entity.Role" select="mtmSelectRole" />
 	</resultMap>
 	
-	<!-- 查找book -->
-	<select id="selectBook" resultType="wsz.mybatis.cascade.entity.Book">
-		select book.id, book.name, book.price, book.user_id
-		from t_book book
-		where book.id =#{book_id}
+	<!-- manyToMany:双向oneToMany,查找role对象的信息 -->
+	<select id="mtmSelectRole" resultType="wsz.mybatis.cascade.entity.Role">
+		select role.id, role.name
+		from t_user_role ul join t_role role on ul.role_id = role.id 
+		where ul.user_id = #{id}
+	</select>
+	<select id="mtmUserSelect" resultMap="baseMap">
+		<!-- 自然连接查询3表 -->
+		select user.*, role.id as role_id, role.name as role_name
+		from t_user user join t_user_role ul on user.id = ul.user_id
+						 join t_role role on ul.role_id = role.id
 	</select>
 	
-	<select id="findAll" resultMap="baseMap">
+	
+	<!-- manyToOne -->
+	<resultMap type="wsz.mybatis.cascade.entity.Address" id="addressResultMap">
+		<!-- 提出公共的resultMap,也可直接在上面的resultMap中添加 -->
+		<id property="id" column="address_id"/>
+    	<result property="title" column="address_title"/>
+	</resultMap>
+	<select id="mtoSelect" resultMap="baseMap">
+		select user.id, user.username, user.password, address.id as address_id, address.title as address_title
+		from t_user user join t_address address on user.address_id = address.id
+	</select>
+	
+	<!-- oneToMany -->
+	<select id="otmSelect" resultType="wsz.mybatis.cascade.entity.Book">
+		<!-- 查找子列表数据 -->
+		select id, name, price, user_id
+		from t_book 
+		where user_id =#{id}
+	</select>
+	<select id="otmSelect" resultMap="baseMap">
+		<!-- 2张表的id需要区分开,用user的id进行查询子列表数据 -->
 		select u.id,u.username,u.password,b.id as book_id,b.name,b.price
-		from t_user u left join t_book b on u.id = b.user_id
+		from t_user u join t_book b on u.id = b.user_id
 	</select>
 	
 	<select id="findById" resultMap="baseMap" parameterType="int">

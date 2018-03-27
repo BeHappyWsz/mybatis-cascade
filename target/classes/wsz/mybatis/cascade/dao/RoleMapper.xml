@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8" ?>  
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">  
+<mapper namespace="wsz.mybatis.cascade.dao.RoleMapper">
+	
+	<resultMap id="baseMap" type="wsz.mybatis.cascade.entity.Role">
+		<id column="id" property="id"/>
+		<result column="name" property="name"/>
+		
+		<!-- manyToMany传入user的id通过中间表查找role对象 -->
+		<collection property="users" javaType="List" column="id" ofType="wsz.mybatis.cascade.entity.User" select="mtmSelectUser" />
+	</resultMap>
+	
+	<!-- manyToMany:双向oneToMany,查找user对象的信息 -->
+	<select id="mtmSelectUser" resultType="wsz.mybatis.cascade.entity.User">
+		select user.*
+		from t_user_role ul left join t_user user on ul.user_id = user.id 
+		where ul.role_id = #{id}
+	</select>
+	
+	<select id="mtmRoleSelect" resultMap="baseMap">
+		<!-- 自然连接查询3表 -->
+		select role.*, user.id as user_id
+		from t_user user join t_user_role ul on user.id = ul.user_id
+						 join t_role role on ul.role_id = role.id
+	</select>
+	
+</mapper>

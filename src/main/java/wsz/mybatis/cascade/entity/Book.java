@@ -3,7 +3,7 @@ package wsz.mybatis.cascade.entity;
 import java.io.Serializable;
 
 /**
- *
+ *User-Book一对多
  *@author  wsz
  *@createdTime 2018年3月26日
 */

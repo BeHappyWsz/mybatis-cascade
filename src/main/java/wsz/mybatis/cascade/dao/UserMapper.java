@@ -11,12 +11,28 @@ import wsz.mybatis.cascade.entity.User;
 */
 public interface UserMapper {
 	
-	List<User> findAll();
-	
 	/**
 	 * 根据id查找User
 	 * @param id
 	 * @return
 	 */
 	User findById(int id);
+	
+	/**
+	 * oneToMany查询
+	 * @return
+	 */
+	List<User> otmSelect();
+	
+	/**
+	 * manyToOne查询
+	 * @return
+	 */
+	List<User> mtoSelect();
+	
+	/**
+	 * 多对多user方进行查询role信息
+	 * @return
+	 */
+	List<User> mtmUserSelect();
 }
