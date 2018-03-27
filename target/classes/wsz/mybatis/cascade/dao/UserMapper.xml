@@ -54,7 +54,7 @@
 		from t_book 
 		where user_id =#{id}
 	</select>
-	<select id="otmSelect" resultMap="baseMap">
+	<select id="otmUserSelect" resultMap="baseMap">
 		<!-- 2张表的id需要区分开,用user的id进行查询子列表数据 -->
 		select u.id,u.username,u.password,b.id as book_id,b.name,b.price
 		from t_user u join t_book b on u.id = b.user_id

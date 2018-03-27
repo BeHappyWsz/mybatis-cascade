@@ -19,10 +19,10 @@ public interface UserMapper {
 	User findById(int id);
 	
 	/**
-	 * oneToMany查询
+	 * oneToMany查询user方
 	 * @return
 	 */
-	List<User> otmSelect();
+	List<User> otmUserSelect();
 	
 	/**
 	 * manyToOne查询

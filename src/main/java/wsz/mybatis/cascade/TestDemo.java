@@ -48,11 +48,10 @@ public class TestDemo {
 	 * oneToMany查询
 	 */
 	@Test
-	public void otmSelect() {
-		List<User> list = userMapper.otmSelect();
+	public void otmUserSelect() {
+		List<User> list = userMapper.otmUserSelect();
 		for (User user : list) {
-			if(1 == user.getId())
-				System.out.println(user.getBooks());
+			System.out.println(user.getBooks());
 		}
 	}
 	
