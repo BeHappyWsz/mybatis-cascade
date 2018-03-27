@@ -12,3 +12,5 @@ mybatis级联进行模拟查询
 1.resultMap中association/collection的上下顺序不能变,否则异常
 
 2.多表连接查询相同的字段比如id，最好区分开，在本例中需要使用id查询关联的多的一方。
+
+![ER图](mybatis-cascade/src/main/resources/mybatis-cascade.png "表关系ER图")
