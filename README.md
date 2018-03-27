@@ -13,4 +13,4 @@ mybatis级联进行模拟查询
 
 2.多表连接查询相同的字段比如id，最好区分开，在本例中需要使用id查询关联的多的一方。
 
-![ER图](https://github.com/BeHappyWsz/mybatis-cascade/src/main/resources/mybatis-cascade.png "表关系ER图")
+![ER图](https://github.com/BeHappyWsz/mybatis-cascade/blob/master/src/main/resources/mybatis-cascade.png "表关系ER图")
