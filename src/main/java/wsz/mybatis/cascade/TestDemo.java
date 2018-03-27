@@ -42,9 +42,7 @@ public class TestDemo {
 	@Test
 	public void findAll() {
 		List<User> list = userMapper.findAll();
-		for (User user : list) {
-			System.out.println(user.toString());
-		}
+		System.out.println(list);
 	}
 	
 	@Test

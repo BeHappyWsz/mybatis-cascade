@@ -15,7 +15,7 @@
 	
 	<!-- 查找book -->
 	<select id="selectBook" resultType="wsz.mybatis.cascade.entity.Book">
-		select book.id as id,book.name,book.price,book.user_id
+		select book.id, book.name, book.price, book.user_id
 		from t_book book
 		where book.id =#{book_id}
 	</select>
