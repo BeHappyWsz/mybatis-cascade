@@ -10,22 +10,22 @@
 		<id column="id" property="id"/>
 		<result column="username" property="username"/>
 		<result column="password" property="password"/>
-		<collection property="books" javaType="List" column="id" ofType="wsz.mybatis.cascade.entity.Book" select="selectBook"></collection>
+		<collection property="books" javaType="List" column="book_id" ofType="wsz.mybatis.cascade.entity.Book" select="selectBook"></collection>
 	</resultMap>
 	
 	<!-- 查找book -->
 	<select id="selectBook" resultType="wsz.mybatis.cascade.entity.Book">
-		select *
-		from t_book
-		where book_id =#{id}
+		select book.id as id,book.name,book.price,book.user_id
+		from t_book book
+		where book.id =#{book_id}
 	</select>
 	
 	<select id="findAll" resultMap="baseMap">
-		select u.id,u.username,u.password,b.book_id as book_id,b.name,b.price,b.code
+		select u.id,u.username,u.password,b.id as book_id,b.name,b.price
 		from t_user u left join t_book b on u.id = b.user_id
 	</select>
 	
-	<select id="findById" resultType="wsz.mybatis.cascade.entity.User" parameterType="int">
+	<select id="findById" resultMap="baseMap" parameterType="int">
 		select <include refid="baseColumn"/>
 		from t_user
 		where id=#{id}

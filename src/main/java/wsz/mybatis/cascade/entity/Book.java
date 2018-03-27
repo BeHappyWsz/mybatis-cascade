@@ -15,20 +15,9 @@ public class Book implements Serializable{
 	
 	private String name;
 	
-	private float price;
+	private double price;
 	
-	private String code;
-
 	private int user_id;
-	
-	public Book() {}
-	
-	public Book(String name, float price, String code) {
-		super();
-		this.name = name;
-		this.price = price;
-		this.code = code;
-	}
 
 	public int getUser_id() {
 		return user_id;
@@ -36,6 +25,13 @@ public class Book implements Serializable{
 
 	public void setUser_id(int user_id) {
 		this.user_id = user_id;
+	}
+
+	public Book() {}
+	
+	public Book(String name, double price) {
+		this.name = name;
+		this.price = price;
 	}
 
 	public int getId() {
@@ -54,21 +50,17 @@ public class Book implements Serializable{
 		this.name = name;
 	}
 
-	public float getPrice() {
+	public double getPrice() {
 		return price;
 	}
 
-	public void setPrice(float price) {
+	public void setPrice(double price) {
 		this.price = price;
 	}
 
-	public String getCode() {
-		return code;
+	@Override
+	public String toString() {
+		return "Book [id=" + id + ", name=" + name + ", price=" + price + ", user_id=" + user_id + "]";
 	}
-
-	public void setCode(String code) {
-		this.code = code;
-	}
-	
 	
 }

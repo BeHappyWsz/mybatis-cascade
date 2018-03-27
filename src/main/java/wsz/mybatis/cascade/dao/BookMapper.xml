@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8" ?>  
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">  
+<mapper namespace="wsz.mybatis.cascade.dao.BookMapper">
+	
+	<resultMap id="bookResult" type="wsz.mybatis.cascade.entity.Book">
+		<id column="id" property="id"/>
+		<result column="name" property="name"/>
+		<result column="price" property="price"/>
+		<result column="user_id" property="user_id"/>
+	</resultMap>
+	
+	<insert id="addBook" parameterType="wsz.mybatis.cascade.entity.Book">
+		insert into t_book(name,price,user_id)
+		values (#{name},#{price},#{user_id})
+	</insert>
+	
+	<select id="findById" resultType="wsz.mybatis.cascade.entity.Book" parameterType="int">
+		select *
+		from t_book
+		where id=#{id}
+	</select>
+</mapper>

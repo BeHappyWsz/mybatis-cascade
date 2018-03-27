@@ -1,6 +1,7 @@
 package wsz.mybatis.cascade.entity;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -18,7 +19,7 @@ public class User implements Serializable{
 	
 	private String password;
 	
-	private List<Book> books;
+	private List<Book> books = new ArrayList<Book>();
 	
 	public List<Book> getBooks() {
 		return books;
